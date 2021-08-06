@@ -50,3 +50,8 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
+###< Phpstorm ###
+.idea/*
+JetBrains.Dockerfile
+###< Phpstorm ###
