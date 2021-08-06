@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+    postrges:
+        image: postgres:${POSTGRES_VERSION}
+        container_name: ${CONTAINER_PREFIX}.postgres
+        tty: true
+        environment:
+            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        ports:
+            - "${POSTGRES_PORT:-5432}:5432"
+        networks:
+            - backend
+
+    mailhog:
+        image: mailhog/mailhog:${MAILHOG_VERSION}
+        container_name: ${CONTAINER_PREFIX}.mailhog
+        ports:
+            - "${MAILHOG_UI_PORT:-8025}:8025"
+            - "${MAILHOG_PORT:-1025}:1025"
+        networks:
+            - backend
+
+    app:
+        container_name: ${CONTAINER_PREFIX}.app
+        build:
+            dockerfile: Docker/PHP/Dockerfile
+            context: .
+
+networks:
+    backend:
+#        ipam:
+#            driver: default
+#            config:
+#                - subnet: 174.33.246.0/24
