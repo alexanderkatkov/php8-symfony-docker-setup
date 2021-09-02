@@ -38,7 +38,7 @@ check:
 
 # APP COMMANDS -------------------
 app-sh:
-	@${DOCKER} ${EXEC} ${CONTAINER_PREFIX}.${APP} /bin/sh
+	@${MAKE} app-exec CMD="/bin/sh"
 
 app-create-skeleton:
 	@clear
