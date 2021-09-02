@@ -53,7 +53,7 @@ app-create-skeleton:
 	@cat "${TMP_INSTALL_FOLDER}/.env" >> .env
 	@rm -f "${TMP_INSTALL_FOLDER}/.env"
 	@echo "Importing .gitignore file contents >>>>>>>"
-	@cat "${TMP_INSTALL_FOLDER}/.gitignore" >> .env
+	@cat "${TMP_INSTALL_FOLDER}/.gitignore" >> .gitignore
 	@rm -f "${TMP_INSTALL_FOLDER}/.gitignore"
 	@echo "Copying files >>>>>>>"
 	@cp -rf ./${TMP_INSTALL_FOLDER}/**/*.* ./
