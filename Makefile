@@ -52,7 +52,10 @@ app-create-skeleton:
 	@echo "Importing ENV file contents >>>>>>>"
 	@cat "${TMP_INSTALL_FOLDER}/.env" >> .env
 	@rm -f "${TMP_INSTALL_FOLDER}/.env"
-	@#rm -rf ${TMP_INSTALL_FOLDER}
+	@echo "Copying files >>>>>>>"
+	@cp -rf ./${TMP_INSTALL_FOLDER}/**/*.* ./
+	@echo "Removing TMP folder >>>>>>>"
+	@rm -rf ${TMP_INSTALL_FOLDER}
 
 
 app-exec:
