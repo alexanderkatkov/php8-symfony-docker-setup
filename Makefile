@@ -56,7 +56,7 @@ app-create-skeleton:
 	@cat "${TMP_INSTALL_FOLDER}/.gitignore" >> .gitignore
 	@rm -f "${TMP_INSTALL_FOLDER}/.gitignore"
 	@echo "Copying files >>>>>>>"
-	@cp -Rf ./${TMP_INSTALL_FOLDER}/*. ./
+	@cp -Rf ${TMP_INSTALL_FOLDER}/. ./
 	@echo "Removing TMP folder >>>>>>>"
 	@rm -rf ${TMP_INSTALL_FOLDER}
 
