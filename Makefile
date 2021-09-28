@@ -46,14 +46,13 @@ check:
 app-cache-clear:
 	@${MAKE} app-exec CMD="rm -rf var/cache"
 	@${MAKE} app-exec CMD="php bin/console cache:clear --env=$(ENV)"
-	@${MAKE} app-exec CMD="php bin/console doctrine:cache:clear-metadata --env=$(ENV)"
 	@${MAKE} app-exec CMD="php bin/console doctrine:cache:clear-query --env=$(ENV)"
 
 app-composer-remove:
 	@${MAKE} app-exec CMD="composer remove $(package)"
 
 app-composer-install:
-	@${MAKE} app-exec CMD="composer install --no-scripts --no-suggest -o"
+	@${MAKE} app-exec CMD="composer install --no-scripts -o"
 
 app-composer-require:
 	@${MAKE} app-exec CMD="composer require $(package)"
@@ -106,7 +105,6 @@ app-lint-phpcs:
 	@${MAKE} app-exec CMD="vendor/bin/phpcs --standard=phpcs.xml.dist"
 
 app-migration-diff:
-	@${MAKE} app-exec CMD="bin/console doctrine:cache:clear-metadata"
 	@${MAKE} app-exec CMD="bin/console doctrine:cache:clear-query"
 	@${MAKE} app-exec CMD="bin/console doctrine:migrations:diff -n"
 

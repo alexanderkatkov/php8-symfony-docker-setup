@@ -28,19 +28,14 @@ RUN install-php-extensions \
 # Xdebug check and install -------------------
 RUN if [ "$ENABLE_XDEBUG" = "false" ] ; then echo 'Xdebug disabled'; else install-php-extensions xdebug; fi
 
+# Composer install -------------------
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Add user and group -------------------
 RUN addgroup -g $GID $APP_USERNAME \
     && adduser -u $UID -G $APP_USERNAME -s /bin/sh -D $APP_USERNAME
 
-# Composer install -------------------
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer --quiet
-RUN rm composer-setup.php
-
 COPY . $APP_PATH
-
-RUN chown -R $APP_USERNAME:$APP_USERNAME $APP_PATH
-
 WORKDIR $APP_PATH
 
 USER $APP_USERNAME
