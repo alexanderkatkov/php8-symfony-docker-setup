@@ -27,7 +27,7 @@ services:
         container_name: ${CONTAINER_PREFIX}.app
         restart: always
         build:
-            dockerfile: ./docker/php/Dockerfile
+            dockerfile: docker/php/Dockerfile.linux
             context: .
             args:
                 APP_DIR: ${APP_DIR}

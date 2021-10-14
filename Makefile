@@ -58,7 +58,7 @@ app-composer-require:
 	@${MAKE} app-exec CMD="composer require $(package)"
 
 app-composer-require-dev:
-	@${MAKE} app-exec CMD="composer require-dev $(package)"
+	@${MAKE} app-exec CMD="composer require --dev $(package)"
 
 app-create-skeleton:
 	@clear
@@ -76,7 +76,7 @@ app-create-skeleton:
 	@cat "${TMP_INSTALL_FOLDER}/.gitignore" >> .gitignore
 	@rm -f "${TMP_INSTALL_FOLDER}/.gitignore"
 	@echo "Copying files >>>>>>>"
-	@cp -Rf ${TMP_INSTALL_FOLDER}/. ./
+	@\cp -fR ${TMP_INSTALL_FOLDER}/. ./
 	@echo "Removing TMP folder >>>>>>>"
 	@rm -rf ${TMP_INSTALL_FOLDER}
 
