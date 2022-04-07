@@ -21,12 +21,12 @@ includes:
   schema: ./taskfiles/SchemaTasks.yaml
 
 tasks:
-  phpunit:
-    desc: "Run all PHPUnit tests"
-    cmds:
-      - task: phpunit:all
-
   lint:
     desc: "Run all linting tasks"
     cmds:
       - task: lint:all
+
+  phpunit:
+    desc: "Run all PHPUnit tests"
+    cmds:
+      - task: phpunit:all
