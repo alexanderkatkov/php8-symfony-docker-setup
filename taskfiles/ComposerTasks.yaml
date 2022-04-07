@@ -1,0 +1,26 @@
+version: '3'
+
+tasks:
+  install:
+    desc: "Install composer packages"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "composer install --no-scripts -o" }
+
+  remove:
+    desc: "Remove composer package"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "composer remove {{.CLI_ARGS}}" }
+
+  require:
+    desc: "Add composer package. Use package as argument: 'app:composer-require vendor/package'"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "composer require {{.CLI_ARGS}}" }
+
+  require-dev:
+    desc: "Add composer package. Use package as argument: 'app:composer-require-dev vendor/package'"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "composer require --dev {{.CLI_ARGS}}" }

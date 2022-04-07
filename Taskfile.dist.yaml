@@ -1,0 +1,32 @@
+version: '3'
+
+env:
+  ENV: ${ENV} | default dev
+  APP: app
+
+dotenv: [ '.env', '.env.{{ENV}}' ]
+
+vars:
+  DOCKER: docker
+  POSTGRES: postgres
+
+includes:
+  app: ./taskfiles/SymfonyTasks.yaml
+  composer: ./taskfiles/ComposerTasks.yaml
+  db: ./taskfiles/DbTasks.yaml
+  docker: ./taskfiles/DockerTasks.yaml
+  lint: ./taskfiles/LintTasks.yaml
+  migration: ./taskfiles/MigrationTasks.yaml
+  phpunit: ./taskfiles/PhpUnitTasks.yaml
+  schema: ./taskfiles/SchemaTasks.yaml
+
+tasks:
+  phpunit:
+    desc: "Run all PHPUnit tests"
+    cmds:
+      - task: phpunit:all
+
+  lint:
+    desc: "Run all linting tasks"
+    cmds:
+      - task: lint:all

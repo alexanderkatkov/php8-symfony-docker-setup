@@ -1,0 +1,29 @@
+version: '3'
+
+tasks:
+  parallel:
+    desc: "Run PHP-Parallel-Lint error checking"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "vendor/bin/parallel-lint --exclude ./bin/.phpunit --exclude vendor ." }
+
+  phpcs:
+    desc: "Run PHP_CodeSniffer analyzer"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "vendor/bin/phpcs --standard=phpcs.xml.dist" }
+
+  phpstan:
+    desc: "Run PHPStan static analyzer"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "vendor/bin/phpstan clear-result-cache" }
+      - task: :app:exec
+        vars: { CLI_ARGS: "vendor/bin/phpstan analyse -l 6 -c phpstan.neon --no-progress --memory-limit=512M --error-format=table src tests" }
+
+  all:
+    desc: "Run all linting tasks"
+    cmds:
+      - task: phpcs
+      - task: phpstan
+      - task: parallel

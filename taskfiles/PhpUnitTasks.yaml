@@ -1,0 +1,28 @@
+version: '3'
+
+tasks:
+  prepare:
+    cmds:
+      - task: :db:remove
+        vars: { CLI_ARGS: "test" }
+      - task: :db:create
+        vars: { CLI_ARGS: "test" }
+      - task: :migration:migrate
+        vars: { CLI_ARGS: "test" }
+
+  clean-run:
+    cmds:
+      - prepare
+      - all
+
+  all:
+    desc: "Run all PHPUnit tests"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/phpunit tests --stop-on-failure {{.CLI_ARGS}}" }
+
+  single:
+    desc: "Filter result of single PHPUnit tests"
+    cmds:
+      - task: all
+        vars: { CLI_ARGS: "--filter {{.CLI_ARGS}}" }

@@ -1,0 +1,32 @@
+version: '3'
+
+vars:
+  DC: docker-compose
+
+tasks:
+  build:
+    desc: Builds images
+    cmds:
+      - "{{.DC}} build --parallel --compress"
+
+  rebuild:
+    desc: Rebuils images, with pullling updates and removing old images
+    cmds:
+      - "{{.DC}} build --parallel --no-cache --compress --force-rm --pull"
+
+  stop:
+    desc: Stops containers in current directory
+    cmds:
+      - "{{.DC}} stop"
+
+  stop-all:
+    desc: Stops all containers
+    cmds:
+      - "{{.DC}} stop $({{.DOCKER}} ps -aq)"
+
+  up:
+    desc: Stops all runnging containers and starts containers for current projects
+    #    deps: [stop-all]
+    cmds:
+      - "{{.DC}} up -d --remove-orphans"
+      - clear

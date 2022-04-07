@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  create:
+    desc: "Create DB schema"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:schema:create --env={{.CLI_ARGS | default .ENV}}" }
+
+  drop:
+    desc: "Drop DB schema"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:schema:drop --env={{.CLI_ARGS | default .ENV}} --force --full-database" }
+
+  validate:
+    desc: "Validate DB schema"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:schema:validate --env={{.CLI_ARGS | default .ENV}}" }

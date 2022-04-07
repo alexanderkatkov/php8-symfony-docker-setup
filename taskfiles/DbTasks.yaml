@@ -1,0 +1,25 @@
+version: '3'
+
+tasks:
+  exec:
+    desc: "Runs any CLI command inside DB container: 'app:exec -- postgres -V'"
+    cmds:
+      - "{{.DOCKER}} exec -it ${CONTAINER_PREFIX}.{{.POSTGRES}} {{.CLI_ARGS}}"
+
+  sh:
+    desc: "SSH into DB container"
+    cmds:
+      - task: exec
+        vars: { CLI_ARGS: "/bin/bash" }
+
+  create:
+    desc: "Create APP DB for given environment using doctrine command"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:database:create --if-not-exists --env={{.CLI_ARGS | default .ENV}}" }
+
+  remove:
+    desc: "Remove APP DB for given environment using doctrine command"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:database:drop --env={{.CLI_ARGS | default .ENV}} --force --if-exists" }

@@ -1,7 +1,12 @@
 ###< Phpstorm ###
 .idea/*
 JetBrains.Dockerfile
-###< Phpstorm ###
+###> Phpstorm ###
+
+###< Tasks ###
+Taskfile.yaml
+Taskfile.yml
+###> Tasks ###
 
 ###< gitkeep ###
 !/**/.gitkeep

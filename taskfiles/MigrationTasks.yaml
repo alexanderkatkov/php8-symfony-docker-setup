@@ -1,0 +1,16 @@
+version: '3'
+
+tasks:
+  diff:
+    desc: "Create DB migrations"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:cache:clear-query" }
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:migrations:diff -n" }
+
+  migrate:
+    desc: "Run DB migrations"
+    cmds:
+      - task: :app:exec
+        vars: { CLI_ARGS: "bin/console doctrine:migrations:migrate -n --env={{.CLI_ARGS | default .ENV}} --allow-no-migration" }
