@@ -1,70 +1,70 @@
 version: "3.9"
 
 services:
-    postgres:
-        image: postgres:${POSTGRES_VERSION}
-        container_name: ${CONTAINER_PREFIX}.postgres
-        tty: true
-        environment:
-            - POSTGRES_DB=${POSTGRES_DB}
-            - POSTGRES_USER=${POSTGRES_USER}
-            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-        ports:
-            - "${POSTGRES_PORT:-5432}:5432"
-        networks:
-            - backend
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: ${CONTAINER_PREFIX}.postgres
+    tty: true
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - backend
 
-    mailhog:
-        image: mailhog/mailhog:${MAILHOG_VERSION}
-        container_name: ${CONTAINER_PREFIX}.mailhog
-        ports:
-            - "${MAILHOG_UI_PORT:-8025}:8025"
-            - "${MAILHOG_PORT:-1025}:1025"
-        networks:
-            - backend
+  mailhog:
+    image: mailhog/mailhog:${MAILHOG_VERSION}
+    container_name: ${CONTAINER_PREFIX}.mailhog
+    ports:
+      - "${MAILHOG_UI_PORT:-8025}:8025"
+      - "${MAILHOG_PORT:-1025}:1025"
+    networks:
+      - backend
 
-    app:
-        container_name: ${CONTAINER_PREFIX}.app
-        restart: always
-        build:
-            dockerfile: docker/php/Dockerfile
-            context: .
-            args:
-                APP_DIR: ${APP_DIR}
-                APP_PHP_VERSION: ${APP_PHP_VERSION}
-                APP_USERNAME: ${USER}
-                GID: ${GID:-1000}
-                ENABLE_XDEBUG: ${APP_ENABLE_XDEBUG:-true}
-                UID: ${UID:-1000}
-        depends_on:
-            - postgres
-            - mailhog
-        environment:
-            - WAIT_HOSTS_TIMEOUT=300
-            - WAIT_SLEEP_INTERVAL=10
-            - WAIT_HOST_CONNECT_TIMEOUT=30
-        networks:
-            - backend
-        volumes:
-            - ./:/var/www/${APP_DIR}:rw
-            - ./docker/php/ini/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+  app:
+    container_name: ${CONTAINER_PREFIX}.app
+    restart: always
+    build:
+      dockerfile: docker/php/Dockerfile
+      context: .
+      args:
+        APP_DIR: ${APP_DIR}
+        APP_PHP_VERSION: ${APP_PHP_VERSION}
+        APP_USERNAME: ${USER}
+        GID: ${GID:-1000}
+        ENABLE_XDEBUG: ${APP_ENABLE_XDEBUG:-true}
+        UID: ${UID:-1000}
+    depends_on:
+      - postgres
+      - mailhog
+    environment:
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=10
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+    networks:
+      - backend
+    volumes:
+      - ./:/var/www/${APP_DIR}:rw
+      - ./docker/php/ini/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
-    nginx:
-        container_name: ${CONTAINER_PREFIX}.nginx
-        restart: always
-        image: nginx:mainline-alpine
-        depends_on:
-            - app
-        ports:
-            - "${NGINX_PORT:-80}:80"
-        networks:
-            - backend
-        volumes:
-            - ./docker/nginx/default.conf.template:/etc/nginx/templates/default.conf.template
-            - ./public:/var/www/${APP_DIR}/public:ro
-        environment:
-            - APP_NAME=${APP_NAME}
-            - APP_DIR=${APP_DIR}
+  nginx:
+    container_name: ${CONTAINER_PREFIX}.nginx
+    restart: always
+    image: nginx:mainline-alpine
+    depends_on:
+      - app
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    networks:
+      - backend
+    volumes:
+      - ./docker/nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./public:/var/www/${APP_DIR}/public:ro
+    environment:
+      - APP_NAME=${APP_NAME}
+      - APP_DIR=${APP_DIR}
 
 networks:
-    backend:
+  backend:
