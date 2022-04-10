@@ -9,6 +9,7 @@ dotenv: [ '.env', '.env.{{ENV}}' ]
 vars:
   DOCKER: docker
   POSTGRES: postgres
+  TMP_INSTALL_FOLDER: ./tmp-install
 
 includes:
   app: ./taskfiles/SymfonyTasks.yaml
@@ -30,3 +31,27 @@ tasks:
     desc: "Run all PHPUnit tests"
     cmds:
       - task: phpunit:all
+
+  create-skeleton:
+    silent: true
+    desc: "Create empty Symfony Skeleton project"
+    cmds:
+      - chmod +x ./taskfiles/helpers/ask.sh
+      - "./taskfiles/helpers/ask.sh 'It will create new project and override existing project files! Are you sure (y/n)'"
+      - echo -e "\n<<<<<<< Removing TMP folder if exists >>>>>>>"
+      - "rm -rf {{.TMP_INSTALL_FOLDER}}"
+      - echo -e "<<<<<<< Creating new TMP folder >>>>>>>"
+      - "mkdir {{.TMP_INSTALL_FOLDER}}"
+      - echo -e "<<<<<<< Downloading Symfony cache >>>>>>>"
+      - task: app:exec
+        vars: { CLI_ARGS: "composer create-project symfony/skeleton {{.TMP_INSTALL_FOLDER}}" }
+      - echo -e "<<<<<<< Importing ENV file contents >>>>>>>"
+      - "cat {{.TMP_INSTALL_FOLDER}}/.env >> .env"
+      - "rm -f {{.TMP_INSTALL_FOLDER}}/.env"
+      - echo -e "<<<<<<< Importing .gitignore file contents >>>>>>>"
+      - "cat {{.TMP_INSTALL_FOLDER}}/.gitignore >> .gitignore"
+      - "rm -f {{.TMP_INSTALL_FOLDER}}/.gitignore"
+      - echo -e "<<<<<<< Copying project files >>>>>>>"
+      - "cp -fR {{.TMP_INSTALL_FOLDER}}/. ./"
+      - echo -e "<<<<<<< Removing TMP folder if exists >>>>>>>"
+      - "rm -rf {{.TMP_INSTALL_FOLDER}}"
