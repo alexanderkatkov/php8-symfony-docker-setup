@@ -9,6 +9,11 @@ tasks:
     cmds:
       - "{{.DC}} build --parallel --compress"
 
+  down:
+    desc: Down containers in current directory
+    cmds:
+      - "{{.DC}} down"
+
   rebuild:
     desc: Rebuils images, with pullling updates and removing old images
     cmds:
