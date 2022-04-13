@@ -1,6 +1,7 @@
 version: '3'
 
 vars:
+  D: docker
   DC: docker-compose
 
 tasks:
@@ -27,11 +28,11 @@ tasks:
   stop-all:
     desc: Stops all containers
     cmds:
-      - "{{.DC}} stop $({{.DOCKER}} ps -aq)"
+      - "{{.D}} stop $({{.DOCKER}} ps -aq)"
 
   up:
     desc: Stops all runnging containers and starts containers for current projects
-    #    deps: [stop-all]
+    deps: [stop-all]
     cmds:
       - "{{.DC}} up -d --remove-orphans"
       - clear
