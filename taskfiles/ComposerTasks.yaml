@@ -14,13 +14,13 @@ tasks:
         vars: { CLI_ARGS: "composer remove {{.CLI_ARGS}}" }
 
   require:
-    desc: "Add composer package. Use package as argument: 'app:composer-require vendor/package'"
+    desc: "Add composer package. Use package as argument: 'app:composer-require -- vendor/package'"
     cmds:
       - task: :app:exec
         vars: { CLI_ARGS: "composer require {{.CLI_ARGS}}" }
 
   require-dev:
-    desc: "Add composer package. Use package as argument: 'app:composer-require-dev vendor/package'"
+    desc: "Add composer package. Use package as argument: 'app:composer-require-dev -- vendor/package'"
     cmds:
       - task: :app:exec
         vars: { CLI_ARGS: "composer require --dev {{.CLI_ARGS}}" }
