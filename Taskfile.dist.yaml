@@ -55,3 +55,28 @@ tasks:
       - "cp -fR {{.TMP_INSTALL_FOLDER}}/. ./"
       - echo -e "<<<<<<< Removing TMP folder if exists >>>>>>>"
       - "rm -rf {{.TMP_INSTALL_FOLDER}}"
+
+  install-dev-base:
+    silent: true
+    desc: "Install base dev packages for a project"
+    cmds:
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "symfony/maker-bundle" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "symfony/test-pack" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "phpstan/phpstan" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "phpstan/extension-installer" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "phpstan/phpstan-symfony" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "phpstan/phpstan-phpunit" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "phpstan/phpstan-doctrine" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "squizlabs/php_codesniffer=*" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "slevomat/coding-standard" }
+      - task: composer:require-dev
+        vars: { CLI_ARGS: "php-parallel-lint/php-parallel-lint" }
