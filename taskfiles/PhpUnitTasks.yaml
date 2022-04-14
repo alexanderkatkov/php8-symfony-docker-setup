@@ -24,7 +24,7 @@ tasks:
         vars: { CLI_ARGS: "bin/phpunit tests --stop-on-failure {{.CLI_ARGS}}" }
 
   single:
-    desc: 'Filter result of single PHPUnit tests: "task phpunit:single -- testName"'
+    desc: 'Filter result of single PHPUnit tests: "task phpunit:single -- testName", also can be used with "TestClassName"'
     cmds:
       - task: all
         vars: { CLI_ARGS: "--filter {{.CLI_ARGS}}" }
