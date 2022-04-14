@@ -12,7 +12,7 @@ tasks:
         vars: { CLI_ARGS: "php bin/console doctrine:cache:clear-query --env={{.CLI_ARGS | default .ENV}}" }
 
   exec:
-    desc: "Runs any CLI command inside APP container: 'app:exec -- php -v'"
+    desc: 'Runs any CLI command inside APP container: "task app:exec -- php -v"'
     cmds:
       - "{{.DOCKER}} exec -it ${CONTAINER_PREFIX}.{{.APP}} {{.CLI_ARGS}}"
 

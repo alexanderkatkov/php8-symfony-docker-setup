@@ -2,7 +2,7 @@ version: '3'
 
 tasks:
   diff:
-    desc: "Create DB migrations"
+    desc: 'Create DB migrations for "dev" environment'
     cmds:
       - task: :app:exec
         vars: { CLI_ARGS: "bin/console doctrine:cache:clear-query" }

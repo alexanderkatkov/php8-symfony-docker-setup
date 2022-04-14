@@ -11,12 +11,12 @@ tasks:
       - "{{.DC}} build --parallel --compress"
 
   down:
-    desc: Down containers in current directory
+    desc: Stop and delete containers in current directory
     cmds:
       - "{{.DC}} down"
 
   rebuild:
-    desc: Rebuils images, with pullling updates and removing old images
+    desc: Rebuild images, with pulling updates and removing old images
     cmds:
       - "{{.DC}} build --parallel --no-cache --compress --force-rm --pull"
 
@@ -26,12 +26,12 @@ tasks:
       - "{{.DC}} stop"
 
   stop-all:
-    desc: Stops all containers
+    desc: Stops all containers across the system
     cmds:
       - "{{.D}} stop $({{.DOCKER}} ps -aq)"
 
   up:
-    desc: Stops all runnging containers and starts containers for current projects
+    desc: Stops all running containers and starts containers for current project
     deps: [stop-all]
     cmds:
       - "{{.DC}} up -d --remove-orphans"
