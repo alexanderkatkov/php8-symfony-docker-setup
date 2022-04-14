@@ -31,8 +31,7 @@ tasks:
       - "{{.D}} stop $({{.DOCKER}} ps -aq)"
 
   up:
-    desc: Stops all running containers and starts containers for current project
-    deps: [stop-all]
+    desc: Starts containers for current project
     cmds:
       - "{{.DC}} up -d --remove-orphans"
       - clear
