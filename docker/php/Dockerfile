@@ -3,7 +3,6 @@ FROM $APP_PHP_VERSION
 
 ARG APP_DIR
 ARG APP_USERNAME
-ARG ENABLE_XDEBUG=${ENABLE_XDEBUG}
 ARG GID=${GID}
 ARG UID=${UID}
 ARG WAIT_VERSION=${WAIT_VERSION:-2.7.2}
@@ -26,7 +25,7 @@ RUN install-php-extensions \
     pdo_pgsql
 
 # Xdebug check and install -------------------
-RUN if [ "$ENABLE_XDEBUG" = "false" ] ; then echo 'Xdebug disabled'; else install-php-extensions xdebug; fi
+RUN if [ "$ENV" = "dev" ] ; then install-php-extensions xdebug; else echo 'Xdebug disabled'; fi
 
 # Composer install -------------------
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -35,8 +34,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN addgroup -g $GID $APP_USERNAME \
     && adduser -u $UID -G $APP_USERNAME -s /bin/sh -D $APP_USERNAME
 
+# Create and fix permissions to allow composer having cache -------------------
+RUN mkdir "/.composer"
+RUN chown -R $APP_USERNAME:$APP_USERNAME /.composer/
+
+# Set up project folder -------------------
 COPY . $APP_PATH
 RUN chown -R $APP_USERNAME:$APP_USERNAME $APP_PATH
 WORKDIR $APP_PATH
 
+# Switch user to non root
 USER $APP_USERNAME
