@@ -9,8 +9,6 @@
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="8"/>
 
-    <rule ref="PSR12"/>
-
     <file>bin/</file>
     <file>config/</file>
     <file>public/</file>
@@ -19,28 +17,48 @@
 
     <exclude-pattern>*/bin/.phpunit/*</exclude-pattern>
     <exclude-pattern>*/Migrations/*</exclude-pattern>
-    <exclude-pattern>src/Kernel.php</exclude-pattern>
-    <exclude-pattern>public/index.php</exclude-pattern>
     <exclude-pattern>config/bootstrap.php</exclude-pattern>
+    <exclude-pattern>config/bundles.php</exclude-pattern>
+    <exclude-pattern>config/preload.php</exclude-pattern>
+    <exclude-pattern>public/index.php</exclude-pattern>
+    <exclude-pattern>src/Kernel.php</exclude-pattern>
+    <exclude-pattern>tests/bootstrap.php</exclude-pattern>
 
     <config name="installed_paths" value="../../slevomat/coding-standard"/>
+
+    <rule ref="PSR12"/>
+    <rule ref="PSR2.Files.EndFileNewline"/>
+    <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
+    <rule ref="PSR2.Namespaces.UseDeclaration"/>
+    <rule ref="PSR12">
+        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock"/>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <properties>
+            <property name="searchAnnotations" value="1"/>
+        </properties>
+    </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
         <properties>
-            <property name="linesCountBeforeDeclare" value="1"/>
+            <property name="linesCountBeforeDeclare" value="0"/>
             <property name="newlinesCountAfterDeclare" value="1"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
     </rule>
-    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
-    <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
 
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Files.LineLength"/>
     <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Generic.PHP.DisallowShortOpenTag"/>
-    <rule ref="PSR2.Files.EndFileNewline"/>
-    <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
-    <rule ref="PSR2.Namespaces.UseDeclaration"/>
+
+
     <rule ref="Zend.Files.ClosingTag"/>
 </ruleset>
