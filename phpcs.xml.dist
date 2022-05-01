@@ -59,6 +59,5 @@
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Generic.PHP.DisallowShortOpenTag"/>
 
-
     <rule ref="Zend.Files.ClosingTag"/>
 </ruleset>
