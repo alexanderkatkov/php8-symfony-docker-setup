@@ -48,6 +48,7 @@ services:
     volumes:
       - ./:/var/www/${APP_DIR}:rw
       - ./docker/php/ini/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./docker/php/ini/user.ini:/usr/local/etc/php/conf.d/user.ini
 
   nginx:
     container_name: ${CONTAINER_PREFIX}.nginx

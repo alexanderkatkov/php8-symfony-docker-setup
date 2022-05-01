@@ -20,6 +20,6 @@ server {
         return 404;
     }
 
-    access_log  off;
+    access_log off;
     error_log off;
 }
