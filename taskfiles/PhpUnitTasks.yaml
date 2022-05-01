@@ -12,7 +12,7 @@ tasks:
         vars: { CLI_ARGS: "test" }
 
   clean-run:
-    desc: "Recreate test DB and migrations and run all tests"
+    desc: "Recreate test DB, perform migrations and run all tests"
     cmds:
       - prepare
       - all
@@ -21,7 +21,7 @@ tasks:
     desc: "Run all PHPUnit tests"
     cmds:
       - task: :app:exec
-        vars: { CLI_ARGS: "bin/phpunit tests --stop-on-failure {{.CLI_ARGS}}" }
+        vars: { CLI_ARGS: "bin/phpunit tests --coverage-text --stop-on-failure {{.CLI_ARGS}}" }
 
   single:
     desc: 'Filter result of single PHPUnit tests: "task phpunit:single -- testName", also can be used with "TestClassName"'

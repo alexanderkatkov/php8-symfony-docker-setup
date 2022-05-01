@@ -11,7 +11,7 @@ tasks:
     desc: "Run PHP_CodeSniffer analyzer"
     cmds:
       - task: :app:exec
-        vars: { CLI_ARGS: "vendor/bin/phpcs --standard=phpcs.xml.dist" }
+        vars: { CLI_ARGS: "vendor/bin/phpcs -s --standard=phpcs.xml.dist" }
 
   phpcbf:
     desc: "Run PHP Code Beautifier and Fixer"
