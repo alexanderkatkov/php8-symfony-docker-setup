@@ -14,15 +14,6 @@ services:
     networks:
       - backend
 
-  mailhog:
-    image: mailhog/mailhog:${MAILHOG_VERSION}
-    container_name: ${CONTAINER_PREFIX}.mailhog
-    ports:
-      - "${MAILHOG_UI_PORT:-8025}:8025"
-      - "${MAILHOG_PORT:-1025}:1025"
-    networks:
-      - backend
-
   app:
     container_name: ${CONTAINER_PREFIX}.app
     restart: always
@@ -34,11 +25,9 @@ services:
         APP_PHP_VERSION: ${APP_PHP_VERSION}
         APP_USERNAME: ${USER}
         GID: ${GID:-1000}
-        ENABLE_XDEBUG: ${APP_ENABLE_XDEBUG:-true}
         UID: ${UID:-1000}
     depends_on:
       - postgres
-      - mailhog
     environment:
       - WAIT_HOSTS_TIMEOUT=300
       - WAIT_SLEEP_INTERVAL=10
@@ -46,14 +35,17 @@ services:
     networks:
       - backend
     volumes:
-      - ./:/var/www/${APP_DIR}:rw
-      - ./docker/php/ini/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-      - ./docker/php/ini/symfony.ini:/usr/local/etc/php/conf.d/symfony.ini
+      - ./:/var/www/${APP_DIR}:delegated,rw
 
   nginx:
     container_name: ${CONTAINER_PREFIX}.nginx
     restart: always
-    image: nginx:mainline-alpine
+    build:
+      dockerfile: docker/nginx/Dockerfile
+      context: .
+      args:
+        APP_DIR: ${APP_DIR}
+        NGINX_VERSION: ${NGINX_VERSION}
     depends_on:
       - app
     ports:
@@ -61,8 +53,7 @@ services:
     networks:
       - backend
     volumes:
-      - ./docker/nginx/default.conf.template:/etc/nginx/templates/default.conf.template
-      - ./public:/var/www/${APP_DIR}/public:ro
+      - ./public:/var/www/${APP_DIR}/public:delegated,ro
     environment:
       - APP_NAME=${APP_NAME}
       - APP_DIR=${APP_DIR}

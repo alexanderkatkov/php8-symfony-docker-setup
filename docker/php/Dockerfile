@@ -31,6 +31,7 @@ RUN install-php-extensions \
     bcmath \
     http \
     pcov \
+    intl \
     pdo_pgsql
 
 # Xdebug check and install -------------------
@@ -46,6 +47,10 @@ RUN addgroup -g $GID $APP_USERNAME \
 # Create and fix permissions to allow composer having cache -------------------
 RUN mkdir "/.composer"
 RUN chown -R $APP_USERNAME:$APP_USERNAME /.composer/
+
+# Copy PHP config files
+COPY docker/php/ini/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY docker/php/ini/symfony.ini /usr/local/etc/php/conf.d/symfony.ini
 
 # Set up project folder -------------------
 COPY . $APP_PATH
