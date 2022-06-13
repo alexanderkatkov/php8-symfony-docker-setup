@@ -11,3 +11,11 @@ Taskfile.yml
 ###< gitkeep ###
 !/**/.gitkeep
 ###> gitkeep ###
+
+###< supervisor ###
+supervisord.pid
+###> supervisor ###
+
+###< logs & cache ###
+var
+###> logs & cache ###

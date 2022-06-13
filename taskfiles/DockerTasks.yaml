@@ -8,7 +8,7 @@ tasks:
   build:
     desc: Builds images
     cmds:
-      - "{{.DC}} build --parallel --compress"
+      - "{{.DC}} build --parallel"
 
   down:
     desc: Stop and delete containers in current directory
@@ -18,7 +18,7 @@ tasks:
   rebuild:
     desc: Rebuild images, with pulling updates and removing old images
     cmds:
-      - "{{.DC}} build --parallel --no-cache --compress --force-rm --pull"
+      - "{{.DC}} build --parallel --no-cache --force-rm --pull"
 
   stop:
     desc: Stops containers in current directory

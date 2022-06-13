@@ -5,8 +5,8 @@ parameters:
         - src
         - tests
     doctrine:
-        ormRepositoryClass: MyApp\Doctrine\BetterEntityRepository
-        odmRepositoryClass: MyApp\Doctrine\BetterDocumentRepository
+        ormRepositoryClass: App\Doctrine\BetterEntityRepository
+        odmRepositoryClass: App\Doctrine\BetterDocumentRepository
     symfony:
     ignoreErrors:
     tmpDir: var/phpstan

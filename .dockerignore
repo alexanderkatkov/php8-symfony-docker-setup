@@ -2,6 +2,7 @@
 .dockerignore
 .gitignore
 .idea
+docker/nginx/Dockerfile
 docker/php/Dockerfile
 README.md
 Taskfile.dist.yaml

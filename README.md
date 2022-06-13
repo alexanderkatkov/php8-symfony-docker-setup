@@ -3,9 +3,8 @@
 ## Base setup includes these images
 
 - postgres:13.3-alpine 
-- php:8-fpm-alpine
+- php:8.1-fpm-alpine
 - nginx:mainline-alpine
-- mailhog:latest
 
 ## Static analyzers included
 

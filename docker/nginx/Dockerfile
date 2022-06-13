@@ -1,8 +1,17 @@
-ARG NGINX_VERSION=${NGINX_VERSION:-nginx:mainline-alpine}
+FROM nginx:stable-alpine
 
-FROM $NGINX_VERSION
+ENV ROOT_DIR=/var/www/app
+ENV LOGS_DIR=${ROOT_DIR}/var/log/nginx
 
-ARG APP_DIR
+# Additional packages installing -------------------
+RUN apk update && apk add --no-cache \
+    logrotate
 
-COPY docker/nginx/default.conf.template /etc/nginx/templates/default.conf.template
-COPY public "/var/www/${APP_DIR}/public/"
+# Copy config -------------------
+COPY ./docker/nginx/nginx.conf /etc/nginx/
+
+# Copy logrotate config -------------------
+COPY ./docker/nginx/logrotate /etc/logrotate.d/nginx
+
+COPY ./public "${ROOT_DIR}/public/"
+WORKDIR "${ROOT_DIR}/public/"
