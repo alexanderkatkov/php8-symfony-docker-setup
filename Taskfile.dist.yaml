@@ -8,18 +8,14 @@ dotenv: [ '.env', '.env.{{ENV}}' ]
 
 vars:
   DOCKER: docker
-  POSTGRES: postgres
   TMP_INSTALL_FOLDER: ./tmp-install
 
 includes:
   app: ./taskfiles/SymfonyTasks.yaml
   composer: ./taskfiles/ComposerTasks.yaml
-  db: ./taskfiles/DbTasks.yaml
   docker: ./taskfiles/DockerTasks.yaml
   lint: ./taskfiles/LintTasks.yaml
-  migration: ./taskfiles/MigrationTasks.yaml
   phpunit: ./taskfiles/PhpUnitTasks.yaml
-  schema: ./taskfiles/SchemaTasks.yaml
 
 tasks:
   lint:
