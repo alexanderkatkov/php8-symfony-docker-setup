@@ -47,9 +47,8 @@ WORKDIR $APP_PATH
 RUN mkdir -p "${APP_PATH}/var/log"
 
 # Symfony folders permission fix
-RUN HTTPDUSER=$(ps axo user,comm | grep -E "[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx" | grep -v root | head -1 | cut -d\  -f1)
-RUN setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX $APP_PATH
-RUN setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX $APP_PATH
+RUN setfacl -dR -m u:www-data:rwX -m u:$(whoami):rwX $APP_PATH
+RUN setfacl -R -m u:www-data:rwX -m u:$(whoami):rwX $APP_PATH
 
 # Create and fix permissions to allow composer having cache -------------------
 RUN mkdir /.composer/
