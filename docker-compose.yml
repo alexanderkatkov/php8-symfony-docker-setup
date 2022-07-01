@@ -1,21 +1,7 @@
 services:
-  postgres:
-    image: postgres:14
-    container_name: ${CONTAINER_PREFIX}.postgres
-    restart: on-failure
-    tty: true
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
-    networks:
-      - backend
-
   app:
-    image: ${CONTAINER_PREFIX}.app
     container_name: ${CONTAINER_PREFIX}.app
+    image: ${CONTAINER_PREFIX}.app
     restart: on-failure
     build:
       dockerfile: docker/php/Dockerfile
@@ -32,8 +18,8 @@ services:
       - ./:/var/www/app/:rw,cached
 
   nginx:
-    image: ${CONTAINER_PREFIX}.nginx
     container_name: ${CONTAINER_PREFIX}.nginx
+    image: ${CONTAINER_PREFIX}.nginx
     restart: on-failure
     build:
       dockerfile: docker/nginx/Dockerfile
