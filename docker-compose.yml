@@ -8,8 +8,6 @@ services:
       context: .
       args:
         APP_ENV: ${APP_ENV:-dev}
-    depends_on:
-      - postgres
     environment:
       - APP_ENV=${APP_ENV:-dev}
     networks:
