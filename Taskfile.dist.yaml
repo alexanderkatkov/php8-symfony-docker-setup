@@ -35,22 +35,30 @@ tasks:
       - chmod +x ./taskfiles/helpers/ask.sh
       - "./taskfiles/helpers/ask.sh 'It will create new project and override existing project files! Are you sure (y/n)'"
       - echo -e "\n<<<<<<< Removing TMP folder if exists >>>>>>>"
-      - "rm -rf {{.TMP_INSTALL_FOLDER}}"
+      - task: app:exec
+        vars: { CLI_ARGS: "rm -rf {{.TMP_INSTALL_FOLDER}}" }
       - echo -e "<<<<<<< Creating new TMP folder >>>>>>>"
-      - "mkdir {{.TMP_INSTALL_FOLDER}}"
+      - task: app:exec
+        vars: { CLI_ARGS: "mkdir {{.TMP_INSTALL_FOLDER}}" }
       - echo -e "<<<<<<< Downloading Symfony cache >>>>>>>"
       - task: app:exec
         vars: { CLI_ARGS: "composer create-project symfony/skeleton {{.TMP_INSTALL_FOLDER}}" }
       - echo -e "<<<<<<< Importing ENV file contents >>>>>>>"
-      - "cat {{.TMP_INSTALL_FOLDER}}/.env >> .env"
-      - "rm -f {{.TMP_INSTALL_FOLDER}}/.env"
+      - task: app:exec
+        vars: { CLI_ARGS: "cat {{.TMP_INSTALL_FOLDER}}/.env >> .env" }
+      - task: app:exec
+        vars: { CLI_ARGS: "rm -f {{.TMP_INSTALL_FOLDER}}/.env" }
       - echo -e "<<<<<<< Importing .gitignore file contents >>>>>>>"
-      - "cat {{.TMP_INSTALL_FOLDER}}/.gitignore >> .gitignore"
-      - "rm -f {{.TMP_INSTALL_FOLDER}}/.gitignore"
+      - task: app:exec
+        vars: { CLI_ARGS: "cat {{.TMP_INSTALL_FOLDER}}/.gitignore >> .gitignore" }
+      - task: app:exec
+        vars: { CLI_ARGS: "rm -f {{.TMP_INSTALL_FOLDER}}/.gitignore" }
       - echo -e "<<<<<<< Copying project files >>>>>>>"
-      - "cp -fR {{.TMP_INSTALL_FOLDER}}/. ./"
+      - task: app:exec
+        vars: { CLI_ARGS: "cp -fR {{.TMP_INSTALL_FOLDER}}/. ./" }
       - echo -e "<<<<<<< Removing TMP folder if exists >>>>>>>"
-      - "rm -rf {{.TMP_INSTALL_FOLDER}}"
+      - task: app:exec
+        vars: { CLI_ARGS: "rm -rf {{.TMP_INSTALL_FOLDER}}" }
 
   install-dev-base:
     silent: true
