@@ -1,7 +1,7 @@
 FROM php:8.1-fpm-alpine
 
 ENV APP_PATH=/var/www/app
-ENV APP_ENV=${ENV:-dev}
+ARG APP_ENV=${APP_ENV:-dev}
 
 # Additional packages installing -------------------
 RUN apk update && apk add --no-cache \
