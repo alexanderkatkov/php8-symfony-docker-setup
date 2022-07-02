@@ -5,11 +5,7 @@ tasks:
     desc: "Clear Symfony cache"
     cmds:
       - task: exec
-        vars: { CLI_ARGS: "rm -rf var/cache" }
-      - task: exec
         vars: { CLI_ARGS: "php bin/console cache:clear --env={{.CLI_ARGS | default .ENV}}" }
-      - task: exec
-        vars: { CLI_ARGS: "php bin/console doctrine:cache:clear-query --env={{.CLI_ARGS | default .ENV}}" }
 
   exec:
     desc: 'Runs any CLI command inside APP container: "task app:exec -- php -v"'

@@ -1,22 +1,6 @@
 version: '3'
 
 tasks:
-  prepare:
-    desc: "Recreate test DB and migrations"
-    cmds:
-      - task: :db:remove
-        vars: { CLI_ARGS: "test" }
-      - task: :db:create
-        vars: { CLI_ARGS: "test" }
-      - task: :migration:migrate
-        vars: { CLI_ARGS: "test" }
-
-  clean-run:
-    desc: "Recreate test DB, perform migrations and run all tests"
-    cmds:
-      - prepare
-      - all
-
   all:
     desc: "Run all PHPUnit tests"
     cmds:
