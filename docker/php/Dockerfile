@@ -18,9 +18,9 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 RUN install-php-extensions \
     bcmath \
     http \
-    pcov \
     intl \
-    pdo_pgsql
+    pcov \
+    zip
 
 # Xdebug install for DEV environment -------------------
 RUN if [ "$APP_ENV" = "dev" ] ; then install-php-extensions xdebug; else echo 'Xdebug disabled'; fi
@@ -45,6 +45,7 @@ WORKDIR $APP_PATH
 
 # Create /var/log folder -------------------
 RUN mkdir -p "${APP_PATH}/var/log"
+RUN mkdir -p "${APP_PATH}/var/cache"
 
 # Symfony folders permission fix
 RUN setfacl -dR -m u:www-data:rwX -m u:$(whoami):rwX $APP_PATH
@@ -57,3 +58,5 @@ RUN chown -R www-data:www-data /.composer/
 COPY ./docker/php/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENTRYPOINT /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+
+WORKDIR $APP_PATH
