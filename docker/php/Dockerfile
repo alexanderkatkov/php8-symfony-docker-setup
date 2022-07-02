@@ -58,5 +58,3 @@ RUN chown -R www-data:www-data /.composer/
 COPY ./docker/php/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENTRYPOINT /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
-
-WORKDIR $APP_PATH
