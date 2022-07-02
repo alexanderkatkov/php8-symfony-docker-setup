@@ -68,7 +68,7 @@ tasks:
         vars: { CLI_ARGS: "composer config --no-plugins allow-plugins.phpstan/extension-installer true" }
       - task: app:exec
         vars: { CLI_ARGS: "composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true" }
-      - task: app:exec
+      - task: composer:require-dev
         vars: { CLI_ARGS: "symfony/maker-bundle" }
       - task: composer:require-dev
         vars: { CLI_ARGS: "symfony/test-pack" }
