@@ -9,7 +9,7 @@ services:
       args:
         APP_ENV: ${APP_ENV:-dev}
     environment:
-      - APP_ENV=${APP_ENV:-dev}
+      APP_ENV: ${APP_ENV:-dev}
     networks:
       - backend
     volumes:
