@@ -17,9 +17,3 @@ tasks:
     cmds:
       - task: exec
         vars: { CLI_ARGS: "/bin/bash" }
-
-  bin/console:
-    desc: 'Symfony `bin/console` util shortcut: "task bin/console cache:clear"'
-    cmds:
-      - task: exec
-        vars: { CLI_ARGS: "bin/console {{.CLI_ARGS}}" }

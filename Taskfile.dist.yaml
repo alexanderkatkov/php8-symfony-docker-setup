@@ -18,6 +18,12 @@ includes:
   phpunit: ./taskfiles/PhpUnitTasks.yaml
 
 tasks:
+  bin/console:
+    desc: 'Symfony "bin/console" util shortcut: "task bin/console -- cache:clear"'
+    cmds:
+      - task: app:exec
+        vars: { CLI_ARGS: "bin/console {{.CLI_ARGS}}" }
+
   lint:
     desc: "Run all linting tasks"
     cmds:
