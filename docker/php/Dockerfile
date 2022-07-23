@@ -23,7 +23,7 @@ RUN install-php-extensions \
     zip
 
 # Xdebug install for DEV environment -------------------
-RUN if [ "$APP_ENV" = "dev" ] ; then install-php-extensions xdebug; else echo 'Xdebug disabled'; fi
+RUN if [ "$APP_ENV" = "dev" ] ; then install-php-extensions xdebug-^3.1; else echo 'Xdebug disabled'; fi
 
 # Composer install -------------------
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
