@@ -32,3 +32,6 @@ services:
     volumes:
       - ./public:/var/www/app/public:ro,delegated
       - ./var/log/nginx/:/var/www/app/var/log/nginx/:rw,delegated
+
+networks:
+  backend:
