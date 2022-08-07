@@ -94,3 +94,7 @@ tasks:
         vars: { CLI_ARGS: "slevomat/coding-standard" }
       - task: composer:require-dev
         vars: { CLI_ARGS: "php-parallel-lint/php-parallel-lint" }
+
+  del-skeleton:
+    cmds:
+      - sudo rm -rf bin composer.json composer.lock config .env.test public/index.php src/ supervisord.pid symfony.lock tests var vendor phpunit.xml.dist
