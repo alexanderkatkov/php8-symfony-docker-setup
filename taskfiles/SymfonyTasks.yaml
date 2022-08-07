@@ -10,7 +10,7 @@ tasks:
   exec:
     desc: 'Runs any CLI command inside APP container: "task app:exec -- php -v"'
     cmds:
-      - "{{.DOCKER}} exec -it ${CONTAINER_PREFIX}.{{.APP}} {{.CLI_ARGS}}"
+      - "{{.DOCKER}} exec -it --user www-data ${CONTAINER_PREFIX}.{{.APP}} {{.CLI_ARGS}}"
 
   sh:
     desc: "SSH into APP container"

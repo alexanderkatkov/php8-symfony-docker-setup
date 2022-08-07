@@ -20,6 +20,10 @@ COPY ./docker/nginx/nginx.conf /etc/nginx/
 # Copy logrotate config -------------------
 COPY ./docker/nginx/logrotate /etc/logrotate.d/nginx
 
+RUN mkdir -p ${LOGS_DIR} &&  \
+    chmod 755 ${LOGS_DIR} && \
+    chown nginx:nginx ${LOGS_DIR}
+
 COPY ./public "${ROOT_DIR}/public/"
 
 WORKDIR "${ROOT_DIR}/public/"
