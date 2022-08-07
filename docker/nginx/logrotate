@@ -1,6 +1,7 @@
-/var/log/nginx/*.log {
+/var/www/app/var/log/nginx/*.log {
+    su nginx nginx
     compress
-    create 640 nginx adm
+    create 0640 nginx nginx
     dateext
     dateformat -%Y-%m-%d
     daily
