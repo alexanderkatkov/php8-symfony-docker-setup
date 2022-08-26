@@ -4,10 +4,9 @@ services:
     image: ${CONTAINER_PREFIX}.app
     restart: on-failure
     build:
+      target: app
       dockerfile: docker/php/Dockerfile
       context: .
-      args:
-        APP_ENV: ${APP_ENV:-dev}
     environment:
       APP_ENV: ${APP_ENV:-dev}
     networks:
