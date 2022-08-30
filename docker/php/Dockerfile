@@ -33,10 +33,6 @@ RUN cp /usr/local/etc/php/php.ini-production ${PHPINI_PATH}
 # PHP copying additional configs files -------------------
 COPY ./docker/php/ini/*.ini ./docker/php/ini/40-${APP_ENV}.ini* /usr/local/etc/php/conf.d/
 
-# Create /var/log folder -------------------
-RUN mkdir -p "${APP_PATH}/var/log"
-RUN mkdir -p "${APP_PATH}/var/cache"
-
 # Create and fix permissions to allow composer having cache -------------------
 RUN mkdir ${COMPOSER_PATH}
 RUN chown -R www-data:www-data $COMPOSER_PATH
@@ -66,5 +62,5 @@ RUN install-php-extensions xdebug-^3.1
 
 # Set FPM Child Process User ID -------------------
 RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
-# Allow www-data to login bia bash (for sudoing into www-data for script executions) -------------------
+# Allow www-data to login via bash (for sudoing into www-data for script executions) -------------------
 RUN sed -E -i "s/(www-data.*)\/usr\/sbin\/nologin/\1\/bin\/bash/" /etc/passwd

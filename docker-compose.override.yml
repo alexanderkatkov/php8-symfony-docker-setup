@@ -1,4 +1,9 @@
 services:
+
   app:
     build:
       target: app_dev
+
+  nginx:
+    build:
+      target: nginx_dev

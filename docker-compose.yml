@@ -1,4 +1,5 @@
 services:
+
   app:
     container_name: ${CONTAINER_PREFIX}.app
     image: ${CONTAINER_PREFIX}.app
@@ -19,6 +20,7 @@ services:
     image: ${CONTAINER_PREFIX}.nginx
     restart: on-failure
     build:
+      target: nginx
       dockerfile: docker/nginx/Dockerfile
       context: .
     depends_on:
@@ -30,7 +32,6 @@ services:
       - backend
     volumes:
       - ./public:/var/www/app/public:ro,delegated
-      - ./var/log/nginx/:/var/www/app/var/log/nginx/:rw,delegated
 
 networks:
   backend:
