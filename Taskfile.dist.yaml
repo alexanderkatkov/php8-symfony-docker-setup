@@ -11,7 +11,7 @@ vars:
   TMP_INSTALL_FOLDER: ./tmp-install
 
 includes:
-  app: ./taskfiles/SymfonyTasks.yaml
+  app: ./taskfiles/AppTasks.yaml
   composer: ./taskfiles/ComposerTasks.yaml
   docker: ./taskfiles/DockerTasks.yaml
   lint: ./taskfiles/LintTasks.yaml
