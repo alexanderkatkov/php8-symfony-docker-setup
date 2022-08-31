@@ -42,12 +42,12 @@ COPY --chown=www-data . $APP_PATH
 WORKDIR $APP_PATH
 
 # Copy entrypoint -------------------
-COPY ./docker/php/40-entrypoint.sh /docker-entrypoint.d/40-entrypoint.sh
-RUN chmod a+x /docker-entrypoint.d/40-entrypoint.sh
+COPY ./docker/php/zz-docker-entrypoint.sh /docker-entrypoint.d/zz-docker-entrypoint.sh
+RUN chmod -R a+x /docker-entrypoint.d/zz-docker-entrypoint.sh
 
 COPY ./docker/php/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-ENTRYPOINT /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+ENTRYPOINT /docker-entrypoint.d/zz-docker-entrypoint.sh
 
 FROM app as app_dev
 
