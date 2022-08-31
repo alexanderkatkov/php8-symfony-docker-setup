@@ -2,18 +2,29 @@
 
 This repository uses [Taskfile](https://taskfile.dev/) for shortcuts of common commands used in Symfony development.
 
-## Base setup includes these images
+## Features
+ - HTTP2 support
+ - Self-signed HTTPS for dev environment
+ - PHP 8.1
+ - Supervisor for PHP container
+ - No file permissions issues
 
+## Base setup includes these images
 - php:8.1-fpm-alpine
-- nginx:mainline-alpine
+- nginx:stable-alpine
+
+## Hot to init new skeleton project
+1) Adjust `CONTAINER_PREFIX` in ENV file: `CONTAINER_PREFIX=project_name`
+2) Run command `task create-skeleton`, it will initialize new Symfony Skeleton project in project root folder.
 
 ## Static analyzers included
-
+Dev tools can be installed using `task install-dev-base` command
 - PHP_CodeSniffer
 - PHPStan
 - PHP-Parallel-Lint
+- PHPUnit
 
-## Default dev packages installed
+### Default dev packages installed via command above
 - symfony/maker-bundle
 - symfony/test-pack
 - phpstan/phpstan
