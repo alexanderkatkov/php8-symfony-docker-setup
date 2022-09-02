@@ -65,6 +65,9 @@ tasks:
       - echo -e "<<<<<<< Removing TMP folder if exists >>>>>>>"
       - task: app:exec
         vars: { CLI_ARGS: "rm -rf {{.TMP_INSTALL_FOLDER}}" }
+      - echo -e "<<<<<<< Resolving VAR folder file permissions >>>>>>>"
+      - task: app:exec
+        vars: { CLI_ARGS: "/bin/var/var-folder-file-permissions.sh" }
 
   install-dev-base:
     silent: true

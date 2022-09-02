@@ -43,7 +43,9 @@ WORKDIR $APP_PATH
 
 # Copy entrypoint -------------------
 COPY ./docker/php/zz-docker-entrypoint.sh /docker-entrypoint.d/zz-docker-entrypoint.sh
+COPY ./docker/php/var-folder-file-permissions.sh /bin/var/var-folder-file-permissions.sh
 RUN chmod -R a+x /docker-entrypoint.d/zz-docker-entrypoint.sh
+RUN chmod -R a+x /bin/var/var-folder-file-permissions.sh
 
 COPY ./docker/php/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
