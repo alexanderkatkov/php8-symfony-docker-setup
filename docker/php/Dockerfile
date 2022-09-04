@@ -6,14 +6,15 @@ ENV PHPINI_PATH=/usr/local/etc/php/php.ini
 
 # Additional packages installing -------------------
 RUN apk update && apk add --no-cache \
-  acl \
-  bash \
-  git \
-  openssh \
-  shadow \
-  supervisor \
-  wget \
-  zip
+    acl \
+    bash \
+    fcgi \
+    git \
+    openssh \
+    shadow \
+    supervisor \
+    wget \
+    zip
 
 # Install PHP extensions -------------------
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/
@@ -32,6 +33,8 @@ RUN cp /usr/local/etc/php/php.ini-production ${PHPINI_PATH}
 
 # PHP copying additional configs files -------------------
 COPY ./docker/php/ini/*.ini ./docker/php/ini/40-${APP_ENV}.ini* /usr/local/etc/php/conf.d/
+# PHP-FPM copying additional config files -------------------
+COPY ./docker/php/php-fpm/*.conf ./docker/php/php-fpm/40-${APP_ENV}.conf* /usr/local/etc/php-fpm.d/
 
 # Create and fix permissions to allow composer having cache -------------------
 RUN mkdir ${COMPOSER_PATH}
@@ -41,13 +44,18 @@ RUN chown -R www-data:www-data $COMPOSER_PATH
 COPY --chown=www-data . $APP_PATH
 WORKDIR $APP_PATH
 
-# Copy entrypoint -------------------
-COPY ./docker/php/zz-docker-entrypoint.sh /docker-entrypoint.d/zz-docker-entrypoint.sh
-COPY ./docker/php/var-folder-file-permissions.sh /bin/var/var-folder-file-permissions.sh
+# Copy entrypoint & scripts -------------------
+COPY ./docker/php/sh/zz-docker-entrypoint.sh /docker-entrypoint.d/zz-docker-entrypoint.sh
+COPY ./docker/php/sh/var-folder-file-permissions.sh /usr/local/bin/var-folder-file-permissions.sh
+COPY ./docker/php/sh/docker-healthcheck.sh /usr/local/bin/docker-healthcheck.sh
 RUN chmod -R a+x /docker-entrypoint.d/zz-docker-entrypoint.sh
-RUN chmod -R a+x /bin/var/var-folder-file-permissions.sh
+RUN chmod -R a+x /usr/local/bin/var-folder-file-permissions.sh
+RUN chmod -R a+x /usr/local/bin/docker-healthcheck.sh
 
 COPY ./docker/php/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Healthcheck -------------------
+HEALTHCHECK --interval=1m --timeout=3s --retries=3 --start-period=30s CMD ["docker-healthcheck.sh"]
 
 ENTRYPOINT /docker-entrypoint.d/zz-docker-entrypoint.sh
 

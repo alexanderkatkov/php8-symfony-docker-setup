@@ -11,6 +11,13 @@ RUN apk update && apk add --no-cache \
 # Copy config -------------------
 COPY ./docker/nginx/nginx.conf /etc/nginx/
 
+# Copy entrypoint & scripts -------------------
+COPY ./docker/nginx/sh/docker-healthcheck.sh /usr/local/bin/docker-healthcheck.sh
+RUN chmod -R a+x /usr/local/bin/docker-healthcheck.sh
+
+# Healthcheck -------------------
+HEALTHCHECK --interval=1m --timeout=3s --retries=3 --start-period=30s CMD ["docker-healthcheck.sh"]
+
 # Set up project folder -------------------
 RUN mkdir -p ${LOGS_DIR}
 COPY --chown=nginx ./public "${ROOT_DIR}/public/"

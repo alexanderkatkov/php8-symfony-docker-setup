@@ -8,8 +8,8 @@ services:
       target: app
       dockerfile: docker/php/Dockerfile
       context: .
-    environment:
-      APP_ENV: ${APP_ENV:-dev}
+    ports:
+      - "9000:9000"
     networks:
       - backend
     volumes:
