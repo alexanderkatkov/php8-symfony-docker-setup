@@ -22,6 +22,7 @@ RUN install-php-extensions \
     bcmath \
     http \
     intl \
+    opcache \
     pcov \
     zip
 
@@ -31,10 +32,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy main config file -------------------
 RUN cp /usr/local/etc/php/php.ini-production ${PHPINI_PATH}
 
-# PHP copying additional configs files -------------------
-COPY ./docker/php/ini/*.ini ./docker/php/ini/40-${APP_ENV}.ini* /usr/local/etc/php/conf.d/
-# PHP-FPM copying additional config files -------------------
-COPY ./docker/php/php-fpm/*.conf ./docker/php/php-fpm/40-${APP_ENV}.conf* /usr/local/etc/php-fpm.d/
+# PHP copying application production config file -------------------
+COPY ./docker/php/ini/30-symfony.prod.ini /usr/local/etc/php/conf.d/
+# PHP-FPM copying additional config file -------------------
+COPY ./docker/php/php-fpm/zz-docker.conf /usr/local/etc/php-fpm.d/
 
 # Create and fix permissions to allow composer having cache -------------------
 RUN mkdir ${COMPOSER_PATH}
@@ -67,10 +68,14 @@ ENV GROUP_ID=1000
 # DEV config for DEV environment -------------------
 RUN cp /usr/local/etc/php/php.ini-development ${PHPINI_PATH}
 
-# Xdebug install for DEV environment -------------------
+# Xdebug installation -------------------
 RUN install-php-extensions xdebug-^3.1
 
 # Set FPM Child Process User ID -------------------
 RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
-# Allow www-data to login via bash (for sudoing into www-data for script executions) -------------------
+
+# PHP copying application development config file, which will override production file values -------------------
+COPY ./docker/php/ini/40-symfony.dev.ini /usr/local/etc/php/conf.d/
+
+# Allow www-data to login via bash (for sudoing under www-data user for script executions) -------------------
 RUN sed -E -i "s/(www-data.*)\/usr\/sbin\/nologin/\1\/bin\/bash/" /etc/passwd
