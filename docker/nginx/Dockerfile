@@ -8,8 +8,8 @@ RUN apk update && apk add --no-cache \
     acl \
     openssl
 
-# Copy config -------------------
-COPY ./docker/nginx/nginx.conf /etc/nginx/
+# Copy production config -------------------
+COPY ./docker/nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
 # Copy entrypoint & scripts -------------------
 COPY ./docker/nginx/sh/docker-healthcheck.sh /usr/local/bin/docker-healthcheck.sh
@@ -31,3 +31,6 @@ RUN openssl req -x509 -nodes -days 365  \
     -addext "subjectAltName=DNS:mydomain.local"  \
     -newkey rsa:2048 -keyout /etc/ssl/private/nginx-ssl.key  \
     -out /etc/ssl/certs/nginx-ssl.crt;
+
+# Copy development config -------------------
+COPY ./docker/nginx/nginx.dev.conf /etc/nginx/nginx.conf
