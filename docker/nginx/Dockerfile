@@ -9,7 +9,7 @@ RUN apk update && apk add --no-cache \
     openssl
 
 # Copy production config -------------------
-COPY ./docker/nginx/nginx.prod.conf /etc/nginx/nginx.conf
+COPY ./docker/nginx/config/nginx.prod.conf /etc/nginx/nginx.conf
 
 # Copy entrypoint & scripts -------------------
 COPY ./docker/nginx/sh/docker-healthcheck.sh /usr/local/bin/docker-healthcheck.sh
@@ -33,4 +33,4 @@ RUN openssl req -x509 -nodes -days 365  \
     -out /etc/ssl/certs/nginx-ssl.crt;
 
 # Copy development config -------------------
-COPY ./docker/nginx/nginx.dev.conf /etc/nginx/nginx.conf
+COPY ./docker/nginx/config/nginx.dev.conf /etc/nginx/nginx.conf
