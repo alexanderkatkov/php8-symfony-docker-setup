@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/sh
+set -e
+
 read -p "${1}"? -n 1 -r
 if [[ ! $REPLY =~ ^[Yy] ]]; then
   echo -e "\n<<<<<<< ABORTING >>>>>>>"
