@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-/usr/local/bin/var-folder-file-permissions.sh
+/usr/local/bin/fix-folder-file-permissions.sh
 # Run composer install as www-data
 su www-data -s /usr/local/bin/composer-install.sh
 

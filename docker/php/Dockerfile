@@ -3,7 +3,7 @@ FROM php:8.1-fpm-alpine as app
 ENV APP_PATH=/var/www/app
 ENV COMPOSER_PATH=/.composer/
 ENV PHPINI_PATH=/usr/local/etc/php/php.ini
-ENV COMPOSER_INSTALL_MODE="--no-dev "
+ENV COMPOSER_INSTALL_MODE="--no-dev --classmap-authoritative"
 
 # Additional packages installing -------------------
 RUN apk update && apk add --no-cache \
@@ -47,11 +47,11 @@ COPY --chown=www-data . $APP_PATH
 WORKDIR $APP_PATH
 
 # Copy entrypoint & scripts -------------------
-COPY ./docker/php/sh/var-folder-file-permissions.sh /usr/local/bin/var-folder-file-permissions.sh
+COPY ./docker/php/sh/fix-folder-file-permissions.sh /usr/local/bin/fix-folder-file-permissions.sh
 COPY ./docker/php/sh/composer-install.sh /usr/local/bin/composer-install.sh
 COPY ./docker/php/sh/docker-healthcheck.sh /usr/local/bin/docker-healthcheck.sh
 COPY ./docker/php/sh/zz-docker-entrypoint.sh /docker-entrypoint.d/zz-docker-entrypoint.sh
-RUN chmod -R a+x /usr/local/bin/var-folder-file-permissions.sh
+RUN chmod -R a+x /usr/local/bin/fix-folder-file-permissions.sh
 RUN chmod -R a+x /usr/local/bin/composer-install.sh
 RUN chmod -R a+x /usr/local/bin/docker-healthcheck.sh
 RUN chmod -R a+x /docker-entrypoint.d/zz-docker-entrypoint.sh

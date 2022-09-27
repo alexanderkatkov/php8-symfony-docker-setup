@@ -67,7 +67,7 @@ tasks:
         vars: { CLI_ARGS: "rm -rf {{.TMP_INSTALL_FOLDER}}" }
       - echo -e "<<<<<<< Resolving VAR folder file permissions >>>>>>>"
       - task: app:exec
-        vars: { CLI_ARGS: "/usr/local/bin/var-folder-file-permissions.sh" }
+        vars: { CLI_ARGS: "/usr/local/bin/fix-folder-file-permissions.sh" }
 
   install-dev-base:
     silent: true
