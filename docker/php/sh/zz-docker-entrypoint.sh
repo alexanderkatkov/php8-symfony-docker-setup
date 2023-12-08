@@ -5,6 +5,5 @@ set -e
 # Run composer install as www-data
 su www-data -s /usr/local/bin/composer-install.sh
 
-/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
-
+#/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 exec docker-php-entrypoint "$@"
