@@ -1,37 +1,37 @@
 version: '3'
 
 vars:
-  D: docker
-  DC: docker-compose
+    D: docker
+    DC: docker-compose
 
 tasks:
-  build:
-    desc: Builds images
-    cmds:
-      - "{{.DC}} build --parallel"
+    build:
+        desc: Builds images
+        cmds:
+            - "{{.DC}} build --parallel"
 
-  down:
-    desc: Stop and delete containers in current directory
-    cmds:
-      - "{{.DC}} down"
+    down:
+        desc: Stop and delete containers in current directory
+        cmds:
+            - "{{.DC}} down"
 
-  rebuild:
-    desc: Rebuild images, with pulling updates and removing old images
-    cmds:
-      - "{{.DC}} build --parallel --no-cache --force-rm --pull"
+    rebuild:
+        desc: Rebuild images, with pulling updates and removing old images
+        cmds:
+            - "{{.DC}} build --parallel --no-cache --force-rm --pull"
 
-  stop:
-    desc: Stops containers in current directory
-    cmds:
-      - "{{.DC}} stop"
+    stop:
+        desc: Stops containers in current directory
+        cmds:
+            - "{{.DC}} stop"
 
-  stop-all:
-    desc: Stops all containers across the system
-    cmds:
-      - "{{.D}} stop $({{.DOCKER}} ps -aq)"
+    stop-all:
+        desc: Stops all containers across the system
+        cmds:
+            - "{{.D}} stop $({{.DOCKER}} ps -aq)"
 
-  up:
-    desc: Starts containers for current project
-    cmds:
-      - "{{.DC}} up -d --remove-orphans"
-      - clear
+    up:
+        desc: Starts containers for current project
+        cmds:
+            - "{{.DC}} up -d --remove-orphans"
+            - clear

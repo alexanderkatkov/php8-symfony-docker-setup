@@ -1,14 +1,14 @@
 version: '3'
 
 tasks:
-  all:
-    desc: "Run all PHPUnit tests"
-    cmds:
-      - task: :app:exec
-        vars: { CLI_ARGS: "bin/phpunit tests --coverage-text --stop-on-failure {{.CLI_ARGS}}" }
+    all:
+        desc: "Run all PHPUnit tests"
+        cmds:
+            -   task: :app:exec
+                vars: { CLI_ARGS: "bin/phpunit tests --coverage-text --stop-on-failure {{.CLI_ARGS}}" }
 
-  single:
-    desc: 'Filter result of single PHPUnit tests: "task phpunit:single -- testName", also can be used with "TestClassName"'
-    cmds:
-      - task: all
-        vars: { CLI_ARGS: "--filter {{.CLI_ARGS}}" }
+    single:
+        desc: 'Filter result of single PHPUnit tests: "task phpunit:single -- testName", also can be used with "TestClassName"'
+        cmds:
+            -   task: all
+                vars: { CLI_ARGS: "--filter {{.CLI_ARGS}}" }

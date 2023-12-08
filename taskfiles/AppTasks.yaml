@@ -1,19 +1,19 @@
 version: '3'
 
 tasks:
-  cache-clear:
-    desc: "Clear Symfony cache"
-    cmds:
-      - task: exec
-        vars: { CLI_ARGS: "php bin/console cache:clear --env={{.CLI_ARGS | default .ENV}}" }
+    cache-clear:
+        desc: "Clear Symfony cache"
+        cmds:
+            -   task: exec
+                vars: { CLI_ARGS: "php bin/console cache:clear --env={{.CLI_ARGS | default .ENV}}" }
 
-  exec:
-    desc: 'Runs any CLI command inside APP container: "task app:exec -- php -v"'
-    cmds:
-      - "{{.DOCKER}} exec -it --user www-data  ${CONTAINER_PREFIX}.{{.APP}} {{.CLI_ARGS}}"
+    exec:
+        desc: 'Runs any CLI command inside APP container: "task app:exec -- php -v"'
+        cmds:
+            - "{{.DOCKER}} exec -it --user www-data  ${CONTAINER_PREFIX}.{{.APP}} {{.CLI_ARGS}}"
 
-  sh:
-    desc: "SSH into APP container"
-    cmds:
-      - task: exec
-        vars: { CLI_ARGS: "/bin/bash" }
+    sh:
+        desc: "SSH into APP container"
+        cmds:
+            -   task: exec
+                vars: { CLI_ARGS: "/bin/bash" }

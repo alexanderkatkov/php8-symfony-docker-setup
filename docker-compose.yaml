@@ -1,37 +1,37 @@
 services:
 
-  app:
-    container_name: ${CONTAINER_PREFIX}.app
-    image: ${CONTAINER_PREFIX}.app
-    restart: on-failure
-    build:
-      target: app
-      dockerfile: docker/php/Dockerfile
-      context: .
-    ports:
-      - "9000:9000"
-    networks:
-      - backend
-    volumes:
-      - ./:/var/www/app/:rw,cached
+    app:
+        container_name: ${CONTAINER_PREFIX}.app
+        image: ${CONTAINER_PREFIX}.app
+        restart: on-failure
+        build:
+            target: app
+            dockerfile: docker/php/Dockerfile
+            context: .
+        ports:
+            - "9000:9000"
+        networks:
+            - backend
+        volumes:
+            - ./:/var/www/app/:rw,cached
 
-  nginx:
-    container_name: ${CONTAINER_PREFIX}.nginx
-    image: ${CONTAINER_PREFIX}.nginx
-    restart: on-failure
-    build:
-      target: nginx
-      dockerfile: docker/nginx/Dockerfile
-      context: .
-    depends_on:
-      - app
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - backend
-    volumes:
-      - ./public:/var/www/app/public:ro,delegated
+    nginx:
+        container_name: ${CONTAINER_PREFIX}.nginx
+        image: ${CONTAINER_PREFIX}.nginx
+        restart: on-failure
+        build:
+            target: nginx
+            dockerfile: docker/nginx/Dockerfile
+            context: .
+        depends_on:
+            - app
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:
+            - backend
+        volumes:
+            - ./public:/var/www/app/public:ro,delegated
 
 networks:
-  backend:
+    backend:

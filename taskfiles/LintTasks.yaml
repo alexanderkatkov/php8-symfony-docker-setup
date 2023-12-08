@@ -1,35 +1,35 @@
 version: '3'
 
 tasks:
-  parallel:
-    desc: "Run PHP-Parallel-Lint error checking"
-    cmds:
-      - task: :app:exec
-        vars: { CLI_ARGS: "vendor/bin/parallel-lint -j 8 --colors --exclude ./bin/.phpunit --exclude vendor ." }
+    parallel:
+        desc: "Run PHP-Parallel-Lint error checking"
+        cmds:
+            -   task: :app:exec
+                vars: { CLI_ARGS: "vendor/bin/parallel-lint -j 8 --colors --exclude ./bin/.phpunit --exclude vendor ." }
 
-  phpcs:
-    desc: "Run PHP_CodeSniffer analyzer"
-    cmds:
-      - task: :app:exec
-        vars: { CLI_ARGS: "vendor/bin/phpcs -s --standard=phpcs.xml.dist" }
+    phpcs:
+        desc: "Run PHP_CodeSniffer analyzer"
+        cmds:
+            -   task: :app:exec
+                vars: { CLI_ARGS: "vendor/bin/phpcs -s --standard=phpcs.xml.dist" }
 
-  phpcbf:
-    desc: "Run PHP Code Beautifier and Fixer"
-    cmds:
-      - task: :app:exec
-        vars: { CLI_ARGS: "vendor/bin/phpcbf -v --standard=phpcs.xml.dist" }
+    phpcbf:
+        desc: "Run PHP Code Beautifier and Fixer"
+        cmds:
+            -   task: :app:exec
+                vars: { CLI_ARGS: "vendor/bin/phpcbf -v --standard=phpcs.xml.dist" }
 
-  phpstan:
-    desc: "Run PHPStan static analyzer"
-    cmds:
-      - task: :app:exec
-        vars: { CLI_ARGS: "vendor/bin/phpstan clear-result-cache" }
-      - task: :app:exec
-        vars: { CLI_ARGS: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M --error-format=table" }
+    phpstan:
+        desc: "Run PHPStan static analyzer"
+        cmds:
+            -   task: :app:exec
+                vars: { CLI_ARGS: "vendor/bin/phpstan clear-result-cache" }
+            -   task: :app:exec
+                vars: { CLI_ARGS: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M --error-format=table" }
 
-  all:
-    desc: "Run all linting tasks"
-    cmds:
-      - task: phpcs
-      - task: phpstan
-      - task: parallel
+    all:
+        desc: "Run all linting tasks"
+        cmds:
+            -   task: phpcs
+            -   task: phpstan
+            -   task: parallel
