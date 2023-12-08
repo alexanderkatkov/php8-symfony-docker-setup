@@ -17,5 +17,5 @@ supervisord.pid
 ###> supervisor ###
 
 ###< logs & cache ###
-var
+var/
 ###> logs & cache ###
